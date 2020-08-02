@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    image: weather-web
+    build: nginx
+    ports:
+      - "80:80"
+  react:
+    image: weather-frontend
+    build: app
+  node:
+    image: weather-api
+    build: server
+    volumes:
+      - weather-cache:/usr/src/api/cache
+
+volumes:
+  weather-cache:

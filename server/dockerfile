@@ -1,0 +1,14 @@
+# build and compile stage
+FROM mhart/alpine-node:10 AS build
+
+WORKDIR /usr/src/api
+COPY package.json .
+RUN yarn
+COPY . .
+
+# final app
+FROM mhart/alpine-node:10
+WORKDIR /usr/src/api
+COPY --from=build /usr/src/api .
+
+CMD ["yarn", "dev"]
